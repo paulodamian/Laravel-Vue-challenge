@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Crew extends Model
 {
+
+    protected $hidden = ['created_at', 'updated_at', 'person_id', 'movie_id', 'rol_id'];
+
     public function person()
     {
         return $this->belongsTo('App\Person');

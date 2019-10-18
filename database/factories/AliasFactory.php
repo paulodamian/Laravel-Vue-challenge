@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 
 $factory->define(Alias::class, function (Faker $faker) {
     return [
-        'name' => $faker->firstName
+        'name' => $faker->name
     ];
 });

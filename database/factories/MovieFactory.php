@@ -7,6 +7,6 @@ use Faker\Generator as Faker;
 $factory->define(Movie::class, function (Faker $faker) {
     return [
         'title' => $faker->sentence(6, true),
-        'year' => $faker->year(2019)
+        'year' => $faker->year()
     ];
 });

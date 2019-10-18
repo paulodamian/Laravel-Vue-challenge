@@ -6,11 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Person extends Model
 {
+    protected $hidden = ['created_at', 'updated_at'];
+
     public function aliases() {
         return $this->hasMany('App\Alias');
     }
 
-    public function movies() {
-        return $this->hasManyThrough('App\Movie', 'App\Crew');
+    public function roles() {
+        return $this->hasMany('App\Crew');
     }
 }
