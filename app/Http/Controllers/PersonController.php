@@ -12,9 +12,46 @@ class PersonController extends Controller
         return PersonResource::collection(Person::paginate(20));
     }
 
+
     public function show($personId) {
         PersonResource::withoutWrapping();
         $model = Person::with('aliases', 'roles.rol', 'roles.movie')->findOrFail($personId);
         return new PersonResource($model);
+    }
+
+
+    public function store(Request $request) {
+        $vd = $request->validate([
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
+        ]);
+
+        $person = new Person();
+        $person->firstName = $vd['firstName'];
+        $person->lastName = $vd['lastName'];
+        $person->save();
+        return new PersonResource($person);
+    }
+
+
+    public function update(Request $request, $id) {
+        $person = Person::findOrFail($id);
+
+        $vd = $request->validate([
+            'firstName' => 'required|max:255',
+            'lastName' => 'required|max:255',
+        ]);
+
+        $person->firstName = $vd['firstName'];
+        $person->lastName = $vd['lastName'];
+        $person->save();
+        return new PersonResource($person);
+    }
+
+
+    public function destroy($id) {
+        $person = Person::findOrFail($id);
+        $person->delete();
+        return response()->json([], 204);
     }
 }

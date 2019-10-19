@@ -15,6 +15,7 @@ class CrewResource extends JsonResource
     public function toArray($request)
     {
         return[
+            'id' => $this->id,
             'person' => new PersonResource($this->person),
             'rol' => [
                 'name' => $this->rol->name
