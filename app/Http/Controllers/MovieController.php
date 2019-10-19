@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 class MovieController extends Controller
 {
     public function index() {
-        return Movie::all();
+        return MovieResource::collection(Movie::paginate(20));
     }
 
     public function show($movieId) {
+        MovieResource::withoutWrapping();
         $model = Movie::with('crews.person', 'crews.rol')->findOrFail($movieId);
-        //return new MovieResource($model);
+        return new MovieResource($model);
     }
 }

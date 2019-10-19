@@ -18,6 +18,6 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/movies', 'MovieController@index');
-Route::get('/movies/{movie}', 'MovieController@show');
+Route::get('/movies/{movie}', 'MovieController@show')->name('movies.movie');
 Route::get('/people', 'PersonController@index');
-Route::get('/people/{person}', 'PersonController@show');
+Route::get('/people/{person}', 'PersonController@show')->name('people.person');

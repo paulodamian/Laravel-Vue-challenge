@@ -14,12 +14,18 @@ class MovieResource extends JsonResource
      */
     public function toArray($request)
     {
-        return [
+        $val = [
             'id' => $this->id,
             'title' => $this->title,
             'year' => $this->romanRepresentation($this->year),
-            'crews' => $this->crews
+            'link' => route('movies.movie', ['movie' => $this->id])
         ];
+
+        if ($this->relationLoaded('crews')) {
+            $val['crews'] = CrewResource::collection($this->crews);
+        }
+
+        return $val;
     }
 
     private function romanRepresentation($number) {

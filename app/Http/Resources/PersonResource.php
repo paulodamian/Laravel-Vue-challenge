@@ -14,6 +14,21 @@ class PersonResource extends JsonResource
      */
     public function toArray($request)
     {
-        return parent::toArray($request);
+        $val = [
+            'id' => $this->id,
+            'lastName' => $this->lastName, 
+            'firstName' => $this->firstName,
+            'link' => route('people.person', ['person' => $this->id])
+        ];
+
+        if ($this->relationLoaded('aliases')) {
+            $val['aliases'] = $this->aliases;
+        }
+
+        if ($this->relationLoaded('roles')) {
+            $val['roles'] = RolResource::collection($this->roles);
+        }
+
+        return $val;
     }
 }
