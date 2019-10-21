@@ -13,6 +13,10 @@ use Illuminate\Http\Request;
 |
 */
 
+Route::get('/', function(){
+    return ['name' => 'laravel challenge', 'version' => '0.1'];
+});
+
 Route::post('/register', 'Auth\AuthController@register')->name('register');
 Route::post('/login', 'Auth\AuthController@login')->name('login');
 
