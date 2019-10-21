@@ -7,12 +7,12 @@
 
 ## Public endpoints 
 
-- POST /register Params: [name, email, password] -- Register a user
-- POST /login Params: [email, password] -- User login
-- GET /movies -- List of moview
-- GET /movies/{movieId} -- Movie details
-- GET /people -- List of people
-- GET /people/{personId} -- Person details
+- POST /api/register Params: [name, email, password] -- Register a user
+- POST /api/login Params: [email, password] -- User login
+- GET /api/movies -- List of moview
+- GET /api/movies/{movieId} -- Movie details
+- GET /api/people -- List of people
+- GET /api/people/{personId} -- Person details
 
 ## Authenticated endpoints
 
@@ -22,15 +22,15 @@ JWT is the token obtained at login.
 
 NOTE: if you are using postman or any other REST client, please add the Accept: application/json header to any request.
 
-- GET /me -- Returns the authenticated user
-- POST /movies Params: [title, year] -- Creates new movie
-- PUT /movies/{movieId} Params: [title, year] -- Edit existing movie
-- DELETE /movies/{movieId} -- Delete existing movie
-- POST /people Params: [firstName, LastName] -- Creates new person
-- PUT /people/{personId} Params: [firstName, LastName] -- Edit existing person
-- DELETE /people/{personId} -- Delete existing person
-- POST /crew Params: [movieId, personId, rolId] -- Creates a new crew member for a movie
-- DELETE /crew/{crewId} -- Delete crew memeber 
+- GET /api/me -- Returns the authenticated user
+- POST /api/movies Params: [title, year] -- Creates new movie
+- PUT /api/movies/{movieId} Params: [title, year] -- Edit existing movie
+- DELETE /api/movies/{movieId} -- Delete existing movie
+- POST /api/people Params: [firstName, LastName] -- Creates new person
+- PUT /api/people/{personId} Params: [firstName, LastName] -- Edit existing person
+- DELETE /api/people/{personId} -- Delete existing person
+- POST /api/crew Params: [movieId, personId, rolId] -- Creates a new crew member for a movie
+- DELETE /api/crew/{crewId} -- Delete crew memeber 
 
 ## Libraries/Frameworks
 Just Laravel as requested by previous comunications.

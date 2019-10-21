@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\PersonResource;
 use App\Person;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class PersonController extends Controller
 {
@@ -14,9 +15,13 @@ class PersonController extends Controller
 
 
     public function show($personId) {
-        PersonResource::withoutWrapping();
-        $model = Person::with('aliases', 'roles.rol', 'roles.movie')->findOrFail($personId);
-        return new PersonResource($model);
+        $data = Cache::rememberForever('/people/' . $personId, function() use($personId) {
+            PersonResource::withoutWrapping();
+            $model = Person::with('aliases', 'roles.rol', 'roles.movie')->findOrFail($personId);
+            return new PersonResource($model);
+        });
+
+        return $data;
     }
 
 
@@ -45,6 +50,7 @@ class PersonController extends Controller
         $person->firstName = $vd['firstName'];
         $person->lastName = $vd['lastName'];
         $person->save();
+        Cache::forget('/people/' . $id);
         return new PersonResource($person);
     }
 
@@ -52,6 +58,7 @@ class PersonController extends Controller
     public function destroy($id) {
         $person = Person::findOrFail($id);
         $person->delete();
+        Cache::forget('/people/' . $id);
         return response()->json([], 204);
     }
 }

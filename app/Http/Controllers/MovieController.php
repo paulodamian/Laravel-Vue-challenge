@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\MovieResource;
 use App\Movie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 
 class MovieController extends Controller
 {
@@ -14,9 +15,13 @@ class MovieController extends Controller
 
 
     public function show($movieId) {
-        MovieResource::withoutWrapping();
-        $model = Movie::with('crews.person', 'crews.rol')->findOrFail($movieId);
-        return new MovieResource($model);
+        $data = Cache::rememberForever('/movie/' . $movieId, function() use($movieId) {
+            MovieResource::withoutWrapping();
+            $model = Movie::with('crews.person', 'crews.rol')->findOrFail($movieId);
+            return new MovieResource($model);
+        });
+
+        return $data;
     }
 
 
@@ -45,6 +50,7 @@ class MovieController extends Controller
         $movie->title = $vd['title'];
         $movie->year = $vd['year'];
         $movie->save();
+        Cache::forget('/movie/' . $id);
         return new MovieResource($movie);
     }
 
@@ -52,6 +58,7 @@ class MovieController extends Controller
     public function destroy($id) {
         $movie = Movie::findOrFail($id);
         $movie->delete();
+        Cache::forget('/movie/' . $id);
         return response()->json([], 204);
     }
 }
