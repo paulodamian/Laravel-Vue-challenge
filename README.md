@@ -4,6 +4,9 @@
 
 [Find them here](https://github.com/paulodamian/Laravel-Vue-challenge/blob/master/Challenge.txt).
 
+## Test URL
+http://198.199.79.113
+
 
 ## Public endpoints 
 
@@ -16,7 +19,7 @@
 
 ## Authenticated endpoints
 
-first you need to obtain an authentication token from the log in and then send the following header on each request:
+first you need to obtain an authentication token from the login and then send the following header on each request:
 <p align="center">Authorization: Bearer JWT</p>
 JWT is the token obtained at login.
 
